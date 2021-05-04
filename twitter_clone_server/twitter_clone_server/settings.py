@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'twitter_clone',
         # 'USER': os.environ.get('DB_USER'),
         # 'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
+        'USER': env('DB_USER'), # ローカルの.envを参照
+        'PASSWORD': env('DB_PASSWORD'), # ローカルの.envを参照
         'HOST': '',
         'PORT': '',
     }
