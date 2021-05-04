@@ -39,6 +39,7 @@ export default {
         id: "1",
         content: "テスト投稿",
         created_at: "3232323",
+        updated_at: 'aaaaaaa',
         user: {
           name: "石田",
         },
