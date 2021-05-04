@@ -11,6 +11,8 @@ dist-ssr
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
 
 ### Django ###
+*.env
+
 *.log
 *.pot
 *.pyc
