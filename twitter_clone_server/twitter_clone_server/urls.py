@@ -18,5 +18,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')), # allauthで追加
+    path('rest-auth/', include('rest_auth.urls')),  # rest-authで追加
+    path('rest-auth/registration/', include('rest_auth.registration.urls')),  # rest-authで追加
+
     path('api/v1/twitter/', include('twitter.urls')), # 追加
 ]

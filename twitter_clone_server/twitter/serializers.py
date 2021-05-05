@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Twitter
+from .models import Tweet, Like
 
-class TwitterSerializer(serializers.ModelSerializer):
+class TweetSerializer(serializers.ModelSerializer):
   class Meta:
-    model = Twitter
-    fields = ('id')
+    model = Tweet
+    fields = ("__all__")
+
+class LikeSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Like
+    fields = ("__all__")

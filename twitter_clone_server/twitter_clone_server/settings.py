@@ -12,13 +12,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import environ
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 環境変数用(django-environ)
+import environ
 env = environ.Env()
 env.read_env('.env')
 
@@ -45,8 +44,50 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'twitter.apps.TwitterConfig', # アプリ追加
+    'accounts.apps.AccountsConfig', # アプリ追加
     'rest_framework', # Django REST frameworkの追加
+
+    'django.contrib.sites', # django-allauth追加時に追記
+    'allauth', # django-allauth追加時に追記
+    'allauth.account', # django-allauth追加時に追記
+    'rest_auth', # django-rest-auth追加時に追記
+    'rest_framework.authtoken', # django-rest-auth追加時に追記
+    'rest_auth.registration', # django-rest-auth追加時に追記
+
+    'corsheaders', # CORS対応で追加
 ]
+
+# allauth追加時に追記
+SITE_ID = 1
+
+# allauth追加時に追記
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# allauth追加時に追記 メールアドレス認証に変更
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = True
+
+# allauth追加時に追記 サインアップにメールアドレス確認を挟む設定
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+
+# allauth追加時に追記 ログイン・ログアウト後の遷移先を設定
+LOGIN_REDIRECT_URL = 'twitter:index' # app名:ルート名
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+# allauth追加時に追記 ログアウトリンクのクリック一発でログアウトする設定
+ACCOUNT_LOGOUT_ON_GET = True
+
+# allauth追加時に追記 django-allauthが送信するメールの件名に自動付与される接頭辞をブランクにする設定
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+
+# allauth追加時に追記 デフォルトのメール送信元を設定
+DEFAULLT_FROM_EMAIL = 'admin@example.com'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +97,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # CORS対応で追加
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'twitter_clone_server.urls'
 
@@ -99,6 +143,10 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+# 追加
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 # Password validation

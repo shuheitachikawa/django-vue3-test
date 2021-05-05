@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'twitter'
 urlpatterns = [
-    path('', views.TwitterListAPIView.as_view(), name="index"),
+    path('', views.TweetListAPIView.as_view(), name="index"),
 ]

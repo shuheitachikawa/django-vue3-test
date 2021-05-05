@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="mx-auto pt-10 max-w-xl">
-      <h1>{{ count }}</h1>
       <div class="mb-5">
         <form @submit.prevent="send">
           <div class="flex">
@@ -13,11 +12,8 @@
       <ul>
         <li v-for="tweet in tweets" :key="tweet.id" class="mb-4">
           <div class="">
-            <p>名前：{{ tweet.user.name }}</p>
             <p>日時：{{ tweet.created_at }}</p>
             <p>内容：{{ tweet.content }}</p>
-            <button class="mr-2">いいね</button
-            ><span>({{ tweet.good.length }})</span>
           </div>
         </li>
       </ul>
@@ -34,16 +30,13 @@ import { Tweet } from "../../types/task";
 export default {
   setup() {
     const store = useStore();
+    store.dispatch("listTweet");
     const send = async (): Promise<void> => {
       const tweet: Tweet = {
         id: "1",
         content: "テスト投稿",
         created_at: "3232323",
-        updated_at: 'aaaaaaa',
-        user: {
-          name: "石田",
-        },
-        good: [],
+        updated_at: "aaaaaaa",
       };
       store.commit("addTweet", tweet);
       await console.log("送信！！！！！");
@@ -52,7 +45,6 @@ export default {
     return {
       send,
       tweets: computed(() => store.getters.tweets),
-      count: computed(() => store.getters.count),
     };
   },
 };

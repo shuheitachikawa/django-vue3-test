@@ -1,6 +1,7 @@
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore } from "vuex";
 import { Tweet } from "../types/task";
+import axios from "axios";
 
 export interface GlobalState {
   count: number;
@@ -29,6 +30,15 @@ export const store = createStore({
     },
     addTweet(state: GlobalState, payload: Tweet) {
       state.tweets.unshift(payload);
+    },
+    setTweet(state: GlobalState, payload: Tweet[]) {
+      state.tweets.push(...payload)
+    }
+  },
+  actions: {
+    async listTweet({ commit }) {
+      const { data } = await axios.get("http://localhost:8000/api/v1/twitter/");
+      commit('setTweet', data)
     },
   },
 });

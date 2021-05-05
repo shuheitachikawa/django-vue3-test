@@ -11,6 +11,6 @@ export interface Tweet {
   content: string;
   created_at: string;
   updated_at: string;
-  user: User;
-  good: Good[];
+  // user: User;
+  // good: Good[];
 }
