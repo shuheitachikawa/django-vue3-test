@@ -25,20 +25,37 @@ export const store = createStore({
     },
   },
   mutations: {
-    increment(state: GlobalState) {
-      state.count++;
+    setTweet(state: GlobalState, payload: Tweet[]) {
+      state.tweets.push(...payload);
     },
     addTweet(state: GlobalState, payload: Tweet) {
       state.tweets.unshift(payload);
     },
-    setTweet(state: GlobalState, payload: Tweet[]) {
-      state.tweets.push(...payload)
-    }
+    removeTweet(state: GlobalState, id: string) {
+      state.tweets = state.tweets.filter((t) => t.id !== id);
+    },
   },
   actions: {
     async listTweet({ commit }) {
       const { data } = await axios.get("http://localhost:8000/api/v1/twitter/");
-      commit('setTweet', data)
+      commit("setTweet", data);
+    },
+    async postTweet({ commit }, payload) {
+      const { data } = await axios.post(
+        "http://localhost:8000/api/v1/twitter/",
+        payload
+      );
+      commit("addTweet", data);
+    },
+    async updateTweet({ commit }, payload) {
+      const { data } = await axios.put(
+        `http://localhost:8000/api/v1/twitter/${payload.id}`,
+        payload
+      );
+    },
+    async deleteTweet({ commit }, id) {
+      await axios.delete(`http://localhost:8000/api/v1/twitter/${id}`);
+      commit("removeTweet", id);
     },
   },
 });
